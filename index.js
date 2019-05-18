@@ -1,7 +1,7 @@
 const http = require("http");
 const url = require('url');
 const querystring = require('querystring');
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 http.createServer(function (request, response) {
     response.writeHead(200, { "Content-Type": "text/javascript" });
     let receive_url = url.parse(request.url);
@@ -23,4 +23,6 @@ http.createServer(function (request, response) {
         console.log('problem with request: ' + e.message);
     });
     req.end();
-}).listen(PORT);
+}).listen(PORT,function () {
+  console.log('Example app listening on port 3000!');
+});
