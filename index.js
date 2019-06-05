@@ -19,7 +19,7 @@ http.createServer(function (request, response) {
         switch (sendURL.protocol) {
             case 'http:':
                 req = http.request(sendURL, function (res) {
-                    let data = { url: query.sendURL, responseHTML: "" }
+                    let data = { url: query.sendURL,header: res.rawHeaders, responseHTML: "" }
                     res.on('data', (chunk) => {
                         data.responseHTML += chunk;
                     });
@@ -36,7 +36,7 @@ http.createServer(function (request, response) {
                 break;
             case 'https:':
                 req = https.request(sendURL, function (res) {
-                    let data = { url: query.sendURL, responseHTML: "" }
+                    let data = { url: query.sendURL,header: res.rawHeaders, responseHTML: "" }
                     res.on('data', (chunk) => {
                         data.responseHTML += chunk;
                     });
