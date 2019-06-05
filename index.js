@@ -16,13 +16,10 @@ http.createServer(function (request, response) {
         let sendURL = url.parse("" + query.sendURL);
         let output_JSON = "";
         let req;
-        console.log(run_function);
-        console.log(method);
-        console.log(sendURL);
         switch (sendURL.protocol) {
             case 'http:':
                 req = http.request(sendURL, function (res) {
-                    let data = { responseHTML: "" }
+                    let data = { url: query.sendURL, responseHTML: "" }
                     res.on('data', (chunk) => {
                         data.responseHTML += chunk;
                     });
@@ -39,7 +36,7 @@ http.createServer(function (request, response) {
                 break;
             case 'https:':
                 req = https.request(sendURL, function (res) {
-                    let data = { responseHTML: "" }
+                    let data = { url: query.sendURL, responseHTML: "" }
                     res.on('data', (chunk) => {
                         data.responseHTML += chunk;
                     });
