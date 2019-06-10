@@ -12,13 +12,14 @@ http.createServer(function (request, response) {
         let receive_url = url.parse(querystring.unescape(request.url));
         let query = querystring.parse(receive_url.query);
         let run_function = "" + query.run_function;
-        let option = "" + JSON.parse(query.option);
+        let method = "" + query.method;
+        let sendURL = url.parse("" + query.sendURL);
         let output_JSON = "";
         let req;
-        switch (option.protocol) {
+        switch (sendURL.protocol) {
             case 'http:':
-                req = http.request(option, function (res) {
-                    let data = { url: option.protocol + "//" + option.hostname + option.path, header: res.rawHeaders, responseHTML: "" };
+                req = http.request(sendURL, function (res) {
+                    let data = { url: query.sendURL, header: res.rawHeaders, responseHTML: "" };
                     res.on('data', (chunk) => {
                         data.responseHTML += chunk;
                     });
@@ -34,8 +35,8 @@ http.createServer(function (request, response) {
                 req.end();
                 break;
             case 'https:':
-                req = https.request(option, function (res) {
-                    let data = { url: option.protocol + "//" + option.hostname + option.path, header: res.rawHeaders, responseHTML: "" };
+                req = https.request(sendURL, function (res) {
+                    let data = { url: query.sendURL, header: res.rawHeaders, responseHTML: "" };
                     res.on('data', (chunk) => {
                         data.responseHTML += chunk;
                     });
